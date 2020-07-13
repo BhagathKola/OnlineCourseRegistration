@@ -1,0 +1,50 @@
+
+{% extends 'common.html' %}
+{% load static %}
+ {% block common %}
+
+
+{% include 'mainmenu.html' %}
+<form action="#" method="post">
+{% csrf_token %}
+<br><br>
+ <table align="center">
+
+    <tr>
+        <th rowspan="5">
+            <img src="{% static 'images/login.png' %}" width="250">
+        </th>
+    </tr>
+    <tr>
+        <h3 align="center">Student Login</h3>
+    </tr>
+    <tr>
+        <th>
+            <label for="username1">Username</label>
+            <input type="text" class="form-control" id="username1" placeholder="Enter Username" name="a1">
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <label for="Password1">Password</label>
+            <input type="password" class="form-control" id="Password1" placeholder="Password" name="a2">
+        </th>
+    </tr>
+
+    <tr align="center">
+        <th>
+            <br/>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </th>
+    </tr>
+
+ </table>
+</form>
+     {% for x in messages %}
+        <h3 style="color: red;font-size: 40px;font-family: 'Times New Roman';text-align: center">
+            {{ x }}
+        </h3>
+    {% endfor %}
+
+
+{% endblock %}

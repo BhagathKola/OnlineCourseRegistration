@@ -5,7 +5,7 @@
 
 
 {% include 'mainmenu.html' %}
-<form action="#" method="post">
+<form action="{% url 'shome' %}" method="post">
 {% csrf_token %}
 <br><br>
  <table align="center">
@@ -45,6 +45,6 @@
             {{ x }}
         </h3>
     {% endfor %}
-
+<br><br><br>
 
 {% endblock %}

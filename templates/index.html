@@ -4,20 +4,38 @@
 {% block common %}
 
     {% include 'mainmenu.html' %}
-
-<table align="center" rowspan="10" width="1300" height="460" border="0" style="font-style: italic;font-size: 100px">
- <tr align="left">
+<br>
+    <br><br>
+<table align="left" rowspan="10"  border="0" style="font-style: italic;font-size: 100px">
+ <tr>
         <th rowspan="9">
             <img src="{% static 'images/home2.png' %}" width="500">
         </th>
     </tr>
 </table>
-
-<table align="center"  border="0" width="50">
-    <tr>
-        <th>
-            Copyrights.@BK
-        </th>
+    <table align="center" border="2">
+    <tr align="center" >
+        <h1 align="center" colspan="8" style="color: darkblue;
+        font-family: 'Times New Roman';
+        text-decoration: underline;font-weight: bold ">Courses</h1><br>
+        <th > Name</th>
+        <th >Faculty</th>
+        <th >Date</th>
+        <th >Time</th>
+        <th  >Fee</th>
+        <th >Duration</th>
     </tr>
-</table>
+     {% for x in detail %}
+        <tr align="center"><th>{{ x.name }}</th>
+        <th>{{ x.faculty }}</th>
+        <th>{{ x.date }}</th>
+        <th>{{ x.time }}</th>
+            <th>{{ x.fee }}</th>
+        <th>{{ x.duration }}</th>
+        </tr>
+
+    {% endfor %}
+    </table>
+
+    <br><br><br><br><br><br><br>
 {%  endblock %}

@@ -1,0 +1,44 @@
+{% extends 'common.html' %}
+{% block common %}
+    {% include 'Stud Menu.html' %}
+    {% load static %}
+
+<br>
+    <br>
+    <table  border="2" align="center">
+
+        <h1 align="center" colspan="8" style="color: darkblue;
+        font-family: 'Times New Roman';font-size: 250%;
+        text-decoration: underline;font-weight: bold ">Courses</h1><br>
+
+    <tr align="center">
+        <th width="100" height="35"> Name</th>
+        <th width="200" height="35">Faculty</th>
+        <th width="150" height="35">Date</th>
+        <th width="100" height="35">Time</th>
+        <th  width="100" height="35">Fee</th>
+        <th width="100" height="35">Duration</th>
+        <th width="100" height="35">Enroll</th>
+    </tr>
+    {% for x in data %}
+        <tr align="center"><th>{{ x.name }}</th>
+        <th>{{ x.faculty }}</th>
+        <th>{{ x.date }}</th>
+        <th>{{ x.time }}</th>
+            <th>{{ x.fee }}</th>
+        <th>{{ x.duration }}</th>
+        <th> Click to enroll
+            <a href={% url 'update' %}?no={{ x.id }} >
+            </a>
+        </th>
+        </tr>
+
+    {% endfor %}
+    {% for x in messages %}
+            <tr align="centet">
+            <th >{{ x }}</th>
+            </tr>
+            {% endfor %}
+    </table>
+
+{% endblock %}

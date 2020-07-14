@@ -7,7 +7,9 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
-    return render(request,"index.html")
+    detail = SchclassModel.objects.all()
+    #detail = SchclassModel.objects.all()
+    return render(request,"index.html",{"detail":detail})
 
 def adminLogin(request):
     return render(request,"adminlogin.html")
@@ -60,17 +62,17 @@ def cupdate(request):
     d = request.POST.get('t6')
     if ti and da:
         SchclassModel.objects.filter(id=no).update(name=n, faculty=fa, date=da, time=ti, fee=f, duration=d)
-        messages.success(request, 'updated success')
+        messages.success(request, 'updated ')
         return viewall(request)
     else:
-        messages.error(request, 'not update')
+        messages.error(request, 'not updated')
         return viewall(request)
 
 
 def delete(request):
     d=request.GET.get('del')
     SchclassModel.objects.filter(id=d).delete()
-    messages.success(request,'Deleted successful')
+    messages.success(request,'Deleted successfully')
     return redirect('viewall')
 
 #StudentFunctions
@@ -84,7 +86,7 @@ def sreg(request):
     c = request.POST.get("a3")
     d = request.POST.get("a4")
     StudentModel(name=a, contactno=b, email=c, password=d).save()
-    messages.success(request, 'registration successful')
+    messages.success(request, 'registred successfully')
     return redirect('register')
 
 
@@ -94,12 +96,16 @@ def slogin(request):
 
 
 def shome(request):
-    na = request.POST.get('t1')
-    pa = request.POST.get('t2')
+    na = request.POST.get('a1')
+    pa = request.POST.get('a2')
     try:
         sa = StudentModel.objects.get(email=na, password=pa)
 
-        return render(request, "Shome.html", {'data': sa})
+        return render(request, "Shome.html", {'name': na})
     except StudentModel.DoesNotExist:
-
         return render(request, "Slogin.html", {"msg": "login faill"})
+
+
+def sView(request):
+    data = SchclassModel.objects.all()
+    return render(request, "Sview.html" ,{"data":data})

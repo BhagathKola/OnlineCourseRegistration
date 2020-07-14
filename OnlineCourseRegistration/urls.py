@@ -31,6 +31,7 @@ urlpatterns = [
     path('register/',views.register,name="register"),
     path('Sreg/', views.sreg, name="sreg"),
     path('Slogin/',views.slogin,name="slogin"),
-    path('Shome/',views.shome,name="shome")
+    path('Shome/',views.shome,name="shome"),
+    path('Sview/',views.sView,name="Sview")
 
 ]

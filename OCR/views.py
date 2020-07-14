@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from OCR.models import SchclassModel,StudentModel,LoginModel
+from OCR.models import SchclassModel,StudentModel
 from django.shortcuts import redirect
 from django.contrib import messages
 
@@ -16,16 +16,14 @@ def adminLogin(request):
 def adminHome(request):
     name = request.POST.get('t1')
     pwd = request.POST.get('t2')
-
     if name == 'admin' and pwd == 'admin':
-        return render(request, 'admin.html')
+          return render(request, 'admin.html')
     else:
-
-        return render(request, 'adminlogin.html', {'error': 'login fail'})
+         return render(request, 'adminlogin.html', {'error': 'login fail'})
 
 
 def sclass(request):
-    return render(request,"schclass.html")
+   return render(request,"schclass.html")
 
 def savedb(request):
     n = request.POST.get('t1')
@@ -36,11 +34,10 @@ def savedb(request):
     d=request.POST.get('t6')
     print(n,fa,da,t,f,d,)
     try:
-        SchclassModel(name=n, faculty=fa, date=da, time=t, fee=f, duration=d).save()
-        return render(request, "schclass.html", {'msg': 'saved success'})
+       SchclassModel(name=n, faculty=fa, date=da, time=t, fee=f, duration=d).save()
+       return render(request, "schclass.html", {'msg': 'saved success'})
     except SchclassModel.DoesNotExist:
-
-        return render(request, 'schclass.html', {'msg': 'not saved'})
+       return render(request, 'schclass.html', {'msg': 'not saved'})
 
 def viewall(request):
     data=SchclassModel.objects.all()
@@ -78,27 +75,31 @@ def delete(request):
 
 #StudentFunctions
 
+def register(request):
+    return render(request,"Sregister.html")
+
 def sreg(request):
     a = request.POST.get("a1")
     b = request.POST.get("a2")
     c = request.POST.get("a3")
     d = request.POST.get("a4")
-    type = "student"
-    StudentModel(name=a, contactno=b, email=c).save()
-    LoginModel(email=c, password=d, type=type).save()
-
-    messages.success(request, 'Signup successfully!!')
-    return redirect('sreg')
+    StudentModel(name=a, contactno=b, email=c, password=d).save()
+    messages.success(request, 'registration successful')
+    return redirect('register')
 
 
 
 def slogin(request):
-    em = request.POST.get("a1")
-    pa = request.POST.get("a2")
-    ty = "student"
+    return render(request,"Slogin.html")
+
+
+def shome(request):
+    na = request.POST.get('t1')
+    pa = request.POST.get('t2')
     try:
-        LoginModel.objects.get(email=em ,password=pa, type=ty)
-        return render(request, "student_home.html", {"name": em})
-    except LoginModel.DoesNotExist:
-        messages.error(request, "Invalid Username or Password")
-        return redirect('slogin')
+        sa = StudentModel.objects.get(email=na, password=pa)
+
+        return render(request, "Shome.html", {'data': sa})
+    except StudentModel.DoesNotExist:
+
+        return render(request, "Slogin.html", {"msg": "login faill"})

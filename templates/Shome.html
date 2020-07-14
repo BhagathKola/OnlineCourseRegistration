@@ -1,0 +1,14 @@
+{% extends 'common.html' %}
+
+{% load static %}
+{% block common %}
+
+    {% include 'student menu.html' %}
+<br><br><br><br><br>
+<body>
+<h1 align="center">
+    Welcome {{ name|capfirst }}
+</h1>
+</body>
+
+{% endblock %}

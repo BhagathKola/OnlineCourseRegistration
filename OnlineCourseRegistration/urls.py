@@ -28,7 +28,9 @@ urlpatterns = [
     path('update/',views.update,name="update"),
     path('Cupdate/',views.cupdate,name="Cupdate"),
     path('delete/', views.delete, name='delete'),
+    path('register/',views.register,name="register"),
     path('Sreg/', views.sreg, name="sreg"),
-    path('Slogin/',views.slogin,name="slogin")
+    path('Slogin/',views.slogin,name="slogin"),
+    path('Shome/',views.shome,name="shome")
 
 ]

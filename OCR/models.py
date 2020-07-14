@@ -17,9 +17,7 @@ class StudentModel(models.Model):
     name = models.CharField(max_length=30)
     contactno = models.IntegerField(unique=True)
     email = models.EmailField(unique=True)
+    password = models.CharField(max_length=30,default='SOME STRING')
 
 
-class LoginModel(models.Model):
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=30)
-    type = models.CharField(max_length=30)
+

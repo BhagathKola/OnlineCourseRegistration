@@ -32,6 +32,12 @@ urlpatterns = [
     path('Sreg/', views.sreg, name="sreg"),
     path('Slogin/',views.slogin,name="slogin"),
     path('Shome/',views.shome,name="shome"),
-    path('Sview/',views.sView,name="Sview")
+    path('Sview/',views.sView,name="Sview"),
+    path('enroll/',views.enroll,name="enroll"),
+
+
+
+    path('contactno/',views.contact,name="contact")
+
 
 ]

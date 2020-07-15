@@ -4,6 +4,7 @@ from django.db import models
 
 
 class SchclassModel(models.Model):
+
     name=models.CharField(max_length=49)
     faculty=models.CharField(max_length=49)
     date = models.DateField()
@@ -14,10 +15,17 @@ class SchclassModel(models.Model):
 
 
 class StudentModel(models.Model):
+
     name = models.CharField(max_length=30)
     contactno = models.IntegerField(unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=30,default='SOME STRING')
+
+
+class studentCourse(models.Model):
+    id = models.AutoField(primary_key=True)
+    sid = models.IntegerField()
+    cid = models.IntegerField()
 
 
 

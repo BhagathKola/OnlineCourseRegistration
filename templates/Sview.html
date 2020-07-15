@@ -27,18 +27,14 @@
         <th>{{ x.time }}</th>
             <th>{{ x.fee }}</th>
         <th>{{ x.duration }}</th>
-        <th> Click to enroll
-            <a href={% url 'update' %}?no={{ x.id }} >
-            </a>
+        <th> <a href="{% url 'enroll' %}?no={{ x.cid }}&sid={{ request.session.sid }}">
+            <img src="{% static 'images/enroll.png' %}" height="30px" width="30px"> </a>
+
         </th>
         </tr>
 
     {% endfor %}
-    {% for x in messages %}
-            <tr align="centet">
-            <th >{{ x }}</th>
-            </tr>
-            {% endfor %}
+
     </table>
 
 {% endblock %}

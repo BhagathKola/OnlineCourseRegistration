@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from OCR.models import SchclassModel,StudentModel
+from OCR.models import SchclassModel,StudentModel,studentCourse
 from django.shortcuts import redirect
 from django.contrib import messages
 
@@ -108,4 +108,21 @@ def shome(request):
 
 def sView(request):
     data = SchclassModel.objects.all()
-    return render(request, "Sview.html" ,{"data":data})
+    return render(request, "Sview.html" , {"data":data})
+
+def enroll(request):
+
+    num = request.GET.get('no')
+    sid = request.GET.get('sid')
+    try:
+        studentCourse.objects.get(sid=sid,cid=num)
+        messages.error(request,"Enrolled Already!!")
+        return redirect('enroll')
+    except studentCourse.DoesNotExist:
+        studentCourse(sid=sid, cid=num).save()
+        messages.success(request,"Enrolled Successfully")
+        return redirect('enroll')
+
+
+def contact(request):
+    return render(request,"contact.html")

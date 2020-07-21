@@ -11,34 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='SchclassModel',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=49)),
-                ('faculty', models.CharField(max_length=49)),
-                ('date', models.DateField()),
-                ('time', models.TimeField()),
-                ('fee', models.IntegerField()),
-                ('duration', models.IntegerField()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='studentCourse',
-            fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('sid', models.IntegerField()),
-                ('cid', models.IntegerField()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='StudentModel',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
-                ('contactno', models.IntegerField(unique=True)),
-                ('email', models.EmailField(max_length=254, unique=True)),
-                ('password', models.CharField(default='SOME STRING', max_length=30)),
-            ],
-        ),
+
+
     ]

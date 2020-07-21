@@ -2,10 +2,9 @@
 {% block common %}
     {% include 'Stud Menu.html' %}
     {% load static %}
-<h1 align="center">
-    Welcome {{ name.uname|capfirst }}
-</h1>
-
+{% if not data %}
+<h4>No Courses are entrolled</h4>
+    {% else %}
 <br>
     <br>
     <table  border="2" align="center">
@@ -21,7 +20,7 @@
         <th width="100" height="35">Time</th>
         <th  width="100" height="35">Fee</th>
         <th width="100" height="35">Duration</th>
-        <th width="100" height="35">Enroll</th>
+
     </tr>
     {% for x in data %}
         <tr align="center"><th>{{ x.name }}</th>
@@ -34,17 +33,11 @@
           <!--  <th><a href="{% url 'enroll' %}?cid={{ x.id }}&sid={{sid }}"> yes</a> </th>
 -->
 
-        <th>
-        <a href="{% url 'enroll' %}?no={{ x.cid }}&sid={{ request.session.sid }}">
-        <img src="{% static 'images/enroll.png' %}" height="30px" width="30px"> </a>
 
-        </th>
         </tr>
 
     {% endfor %}
 
     </table>
-{% for x in messages %}
-    <h4 style="padding: 50px; font-size: 25px; color: #1d2124;">{{ x }}</h4>
-        {%  endfor %}
+{% endif %}
 {% endblock %}

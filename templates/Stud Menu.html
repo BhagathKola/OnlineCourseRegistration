@@ -23,19 +23,21 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'shome' %}"?sn={{ name }}> Home<span class="sr-only">(current)</span></a>
+      </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'Sview' %}"> Enroll Course <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'Sview' %}?sid={{ request.session.sid }}"> Enroll Course <span class="sr-only">(current)</span></a>
       </li>
         <li class="nav-item active">
-        <a class="nav-link" href="#">View All the Enrolled Courses <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'Venroll' %}?sid={{ request.session.sid }}">View All the Enrolled Courses <span class="sr-only">(current)</span></a>
       </li>
         <li class="nav-item active">
-        <a class="nav-link" href="#">Cancel the Enrolled Courses <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'Sdelete' %}"?sid={{ request.session.sid }}>Cancel the Enrolled Courses <span class="sr-only">(current)</span></a>
       </li>
 
         <li class="nav-item active">
-        <a class="nav-link" href="{% url 'index' %}">Logout<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'slogin' %}">Logout<span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>

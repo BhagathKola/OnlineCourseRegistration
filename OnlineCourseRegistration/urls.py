@@ -34,6 +34,10 @@ urlpatterns = [
     path('Shome/',views.shome,name="shome"),
     path('Sview/',views.sView,name="Sview"),
     path('enroll/',views.enroll,name="enroll"),
+    path('Venroll/',views.venroll,name="Venroll"),
+    path('Sdelete/',views.sdelete,name="Sdelete"),
+    path('student_logout/',views.student_logout,name='student_logout'),
+
 
 
 

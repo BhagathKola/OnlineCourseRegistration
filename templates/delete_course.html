@@ -1,0 +1,30 @@
+{% extends 'common.html' %}
+{% block common %}
+    {% include 'Stud Menu.html' %}
+    {% load static %}
+
+
+
+<table class="table">
+<tr>
+    <th>Course number</th>
+    <th>Course Name</th>
+    <th>Delete</th>
+</tr>
+    {% for x in data %}
+<tr>
+    <th>{{ x.cid }}</th>
+    <th>{{ x.course_name }}</th>
+    <form action="{% url 'Sdelete' %}" method="post">
+      {% csrf_token %}
+      <th><input type="hidden" value="{{ x.cid }}" name= "cno" >
+         <input type="hidden" value="{{ request.session.sid }}" name="sid">
+          <button type="submit"><img src="{% static 'images/delete.png' %}" width="30px" height="30px"></button></th>
+      </form>
+
+    <!--th><a href="{% url 'delete_course' %}?del={{ x.cid }}&sid ={{ request.session.sid }}"><img src="{% static 'images/delete.jpg' %}" width="30px" height="30px"></a> </th--!>
+</tr>  -->
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,13 +1,14 @@
 from django.shortcuts import render
-from OCR.models import SchclassModel,StudentModel,studentCourse
+from OCR.models import CourseregModel,StudentlogModel,studentCourse
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.db.utils import IntegrityError
 
 
 
 # Create your views here.
 def index(request):
-    detail = SchclassModel.objects.all()
+    detail = CourseregModel.objects.all()
     #detail = SchclassModel.objects.all()
     return render(request,"index.html",{"detail":detail})
 
@@ -36,19 +37,19 @@ def savedb(request):
     d=request.POST.get('t6')
     print(n,fa,da,t,f,d,)
     try:
-       SchclassModel(name=n, faculty=fa, date=da, time=t, fee=f, duration=d).save()
-       return render(request, "schclass.html", {'msg': 'saved success'})
-    except SchclassModel.DoesNotExist:
+       CourseregModel(name=n, faculty=fa, date=da, time=t, fee=f, duration=d).save()
+       return render(request, "schclass.html", {'msg': 'Course Registered Successfully'})
+    except CourseregModel.DoesNotExist:
        return render(request, 'schclass.html', {'msg': 'not saved'})
 
 def viewall(request):
-    data=SchclassModel.objects.all()
+    data=CourseregModel.objects.all()
     return render(request,'viewall.html',{'data':data})
 
 def update(request):
     num = request.GET.get('no')
 
-    data = SchclassModel.objects.get(id=num)
+    data = CourseregModel.objects.get(cid=num)
 
     return render(request, 'update.html', {'data': data})
 
@@ -61,7 +62,7 @@ def cupdate(request):
     f = request.POST.get('t5')
     d = request.POST.get('t6')
     if ti and da:
-        SchclassModel.objects.filter(id=no).update(name=n, faculty=fa, date=da, time=ti, fee=f, duration=d)
+        CourseregModel.objects.filter(cid=no).update(name=n, faculty=fa, date=da, time=ti, fee=f, duration=d)
         messages.success(request, 'updated ')
         return viewall(request)
     else:
@@ -71,7 +72,7 @@ def cupdate(request):
 
 def delete(request):
     d=request.GET.get('del')
-    SchclassModel.objects.filter(id=d).delete()
+    CourseregModel.objects.filter(cid=d).delete()
     messages.success(request,'Deleted successfully')
     return redirect('viewall')
 
@@ -81,48 +82,81 @@ def register(request):
     return render(request,"Sregister.html")
 
 def sreg(request):
-    a = request.POST.get("a1")
-    b = request.POST.get("a2")
-    c = request.POST.get("a3")
-    d = request.POST.get("a4")
-    StudentModel(name=a, contactno=b, email=c, password=d).save()
+    un = request.POST.get("a1")
+    a = request.POST.get("a2")
+    b = request.POST.get("a3")
+    c = request.POST.get("a4")
+    d = request.POST.get("a5")
+    StudentlogModel(uname=un,name=a, contactno=b, email=c, password=d).save()
     messages.success(request, 'registred successfully')
     return redirect('register')
 
 
 
 def slogin(request):
-    return render(request,"Slogin.html")
+    un = request.POST.get('a1')
+    pa = request.POST.get('a2')
+    try:
+        sn = StudentlogModel.objects.get(uname=un, password=pa )
+        return render(request, "Shome.html", {'name': sn})
+    except StudentlogModel.DoesNotExist:
+        return render(request, "Slogin.html", {"msg": 'Username or Password is incorrect'})
+
 
 
 def shome(request):
-    na = request.POST.get('a1')
-    pa = request.POST.get('a2')
-    try:
-        sa = StudentModel.objects.get(email=na, password=pa)
-
-        return render(request, "Shome.html", {'name': na})
-    except StudentModel.DoesNotExist:
-        return render(request, "Slogin.html", {"msg": "login faill"})
-
+    uname = request.GET.get("sn")
+    return render(request,"Shome.html",{"name":uname})
 
 def sView(request):
-    data = SchclassModel.objects.all()
+
+    data = CourseregModel.objects.all()
     return render(request, "Sview.html" , {"data":data})
 
 def enroll(request):
+    c = request.GET.get('no')
+    i = request.GET.get('sid')
 
-    num = request.GET.get('no')
-    sid = request.GET.get('sid')
+    #print(c,i)
+    #studentCourse(cid=c,sid=i).save()
+    #print('data save')
+    #return render(request, 'Sview.html')
     try:
-        studentCourse.objects.get(sid=sid,cid=num)
-        messages.error(request,"Enrolled Already!!")
-        return redirect('enroll')
+        sn=studentCourse.objects.get(sid=i,cid=c)
+        messages.error(request, "Already Entrolled",{"data":sn})
+        return render(request,"Sview.html")
     except studentCourse.DoesNotExist:
-        studentCourse(sid=sid, cid=num).save()
-        messages.success(request,"Enrolled Successfully")
-        return redirect('enroll')
+        studentCourse(sid=i, cid=c).save()
+        messages.success(request, "Enrolled Successfully")
+        return render(request,"Sview.html")
+
+
+def venroll(request):
+    sid = request.GET.get('sid')
+    res = studentCourse.objects.filter(sid=sid)
+    coures = [CourseregModel.objects.get(cid=x.cid) for x in res]
+    return render(request, 'view_enroll.html', {'data': coures})
+
+
+    #sid = request.GET.get('sid')
+    #res = studentCourse.objects.filter(sid= sid)
+    #course = [CourseregModel.objects.get(cid=id=x.cid) for x in res]
+    #return render(request,"view_enroll.html",{"data":course})
+
+def sdelete(request):
+    cno = request.POST.get('cno')
+    sid = request.POST.get('sid')
+    studentCourse.objects.get(cid=cno,sid=sid).delete()
+    res = studentCourse.objects.filter(sid=sid)
+    data = [studentCourse.objects.get(cid=x.cid) for x in res]
+    return render(request,"delete_course.html",{"data": data})
+
+def student_logout(req):
+    del req.session['sid']
+    return redirect('slogin')
 
 
 def contact(request):
     return render(request,"contact.html")
+
+
